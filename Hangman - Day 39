@@ -1,0 +1,57 @@
+import random
+
+print('\033[33m', 'HANGMAN')
+print("\033[0m", end="")
+
+wordList = ["british", "suave", "integrity", "accent", "evil", "genius", "Downton"]
+
+picks = []
+
+myWord = random.choice(wordList) # randomly picks a word
+wordLength = len(myWord) # length of selected word
+clue = list(wordLength*"_") # length of word is turned to underscores
+word = list(myWord)
+
+# print(myWord) # this is just commenting out the answer
+print()
+
+lives = 6
+
+while True:
+  print(clue)
+  print()
+  guess = input("Guess a letter: ").strip().lower()
+  if guess in picks:
+    print("You have picked that before")
+    continue
+  
+    
+  
+  if guess in myWord:
+    print("\033[32m Yes!")
+    print("\033[0m", end="")
+    for i in range(len(myWord)):
+      if myWord[i] == guess:
+        clue[i] = guess  # Loop through each position in word, if guess matches letter
+        # at that position, 
+        # reveal it in the clue list
+    
+  
+  else:
+    print("\033[31m Nope")
+    print("\033[0m", end="")
+    picks.append(guess)
+    lives -= 1
+    print(picks)
+    print("Letter not in word")
+    print(f"You have {lives} lives left")
+    print()
+
+  if "_" not in clue:
+    print("\033[32m", end="Congratulations!!!")
+    print(f"The word was {myWord}")
+    break
+  if lives == 0:
+    print(f"\033[31m Game over, the word was: {myWord}")
+    break
+
